@@ -1,4 +1,3 @@
-
 var THRESHOLD = .7;
 var movie_list = "";
 var good_movies_json = "";
@@ -20,10 +19,20 @@ function evaluateReviews(oldListJSON) {
   	var review = list[i];
     var probability = review.probability;
 	var label = review.label;
+	var tweets = document.getElementById("tweets");
+	var row = tweets.insertRow(i);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	cell1.innerHTML = review.user_value;
+	cell2.innerHTML = probability;
+	cell3.innerHTML = label;
 	if (probability > THRESHOLD) {
 		if (label === '1') {
+			row.classList.add("danger");
 			num_negative_reviews++;
 		} else if (label === '5') {
+			row.classList.add("success");
 			num_positive_reviews++;
 		}
 	}
@@ -102,7 +111,7 @@ function evaluateReviewsAverages(oldListJSON, movieName, score) {
 	try{
         list=JSON.parse(response);
     }catch(e){
-        alert(e); //error in the above string(in this case,yes)!
+        //alert(e); //error in the above string(in this case,yes)!
     }
 	var num_positive_reviews=0;
 	var num_negative_reviews=0;
@@ -150,7 +159,7 @@ function setRecentMovieList(moviesJSON) {
 //returns rotten tomato score if exists, else -1
 function checkContains(query) {
 
-getAveragesBad();
+//getAveragesBad();
 
 	for(var i = 0; i < good_movies_json.movies.length; i++) {
     	if(good_movies_json.movies[i].movie == query) {
@@ -198,7 +207,7 @@ function getRottenTomatoesScore(movieFolder, query) {
 
 function searchMovie() {
 	var movieName = document.getElementById("movieInput").value;
-	document.getElementById("movie_name").innerHTML = movieName;
+	document.getElementById("movie_name").innerHTML = "Movie Name: " + movieName;
 	console.log(movieName);
 	var folder = checkContains(movieName);
 	if(folder === "empty") {
@@ -246,3 +255,4 @@ function getAveragesBad() {
 loadJSON(setGoodMovieList, "/classification_output/good/movies.json");
 loadJSON(setBadMovieList, "/classification_output/bad/movies.json");
 loadJSON(setRecentMovieList, "/classification_output/recent/movies.json");
+
