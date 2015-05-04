@@ -1,3 +1,7 @@
+body {
+	
+}
+
 #container {
 	margin: 0 auto;
 	width: 800px;
@@ -56,4 +60,12 @@ span.twitter-typeahead {
 
 #movieSubmit { 
 	margin-top: -4px;
+}
+
+#twitter {
+	position:relative !important;
+}
+
+#sentiwordnet {
+	position:relative !important;
 }
