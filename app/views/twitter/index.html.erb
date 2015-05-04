@@ -31,17 +31,33 @@
 		<div class="page-header text-center">
 			<h1>SentiWordNet <small>Opinion Mining</small></h1>
 		</div>
+		<img src="sentiwordgood.png" style="width:800px"/>
+		<img src="sentiwordbad.png" style="width:800px"/>
+
+		<pre>		for (Map.Entry<String, HashMap<Integer, Double>> entry : tempDictionary.entrySet()) {
+			String word = entry.getKey();
+			Map<Integer, Double> synSetScoreMap = entry.getValue();
+
+			// Calculate weighted average. Weigh the synsets according to
+			// their rank.
+			// Score= 1/2*first + 1/3*second + 1/4*third ..... etc.
+			// Sum = 1/1 + 1/2 + 1/3 ...
+			double score = 0.0;
+			double sum = 0.0;
+			for (Map.Entry<Integer, Double> setScore : synSetScoreMap.entrySet()) {
+				score += setScore.getValue() / (double) setScore.getKey();
+				sum += 1.0 / (double) setScore.getKey();
+			}
+			score /= sum;
+
+			dictionary.put(word, score);
+		}
+		</pre>
 	</div>
 
 	
 </div>
-<div id="leftControl" class="control">
-		<img id="leftArrow" class="arrow left" style="width:60px" src="arrowleft2.png"></img>
-	</div>
 
-	<div id="rightControl" class="control">
-		<img id="rightArrow" class="arrow right" style="width:60px" src="arrowright2.png"></img>
-	</div>
 </body>
 <script>
 
