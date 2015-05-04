@@ -15,6 +15,7 @@ function evaluateReviews(oldListJSON) {
 	var list = JSON.parse(listJSON);
 	var num_positive_reviews=0;
 	var num_negative_reviews=0;
+	var num_neutral_reviews=0;
   for(var i = 0; i < list.length; i++) {
   	var review = list[i];
     var probability = review.probability;
@@ -34,6 +35,8 @@ function evaluateReviews(oldListJSON) {
 		} else if (label === '5') {
 			row.classList.add("success");
 			num_positive_reviews++;
+		} else if (label === '3') {
+			num_neutral_reviews++;
 		}
 	}
 	}
@@ -45,6 +48,33 @@ if(num_positive_reviews!=0 && num_negative_reviews != 0) {
 } else {
 	document.getElementById("twitter_rating").innerHTML = "Not enough twitter reviews to determine score :/";
 }
+	var salesData=[
+	{label:"Blue", color:"#3366CC"},
+	{label:"Red", color:"#DC3912"},
+	{label:"Green", color:"#109618"}
+	];
+
+	var svg = d3.select("#twitter_rating").append("svg").attr("width", 250).attr("height", 250);
+
+	svg.append("g").attr("id","salespie");
+		
+	gradPie.draw("salespie", randomData(), 130, 130, 100);
+
+	function changeData(){
+		gradPie.transition("salespie", randomData(), 160);
+	}
+
+	function randomData(){
+		return salesData.map(function(d){ 
+			if (d.label === "Blue"){
+				return {label:d.label, value:num_neutral_reviews, color:d.color};
+			} else if (d.label === "Red") {
+				return {label:d.label, value:num_negative_reviews, color:d.color};
+			} else if (d.label === "Green"){
+				return {label:d.label, value:num_positive_reviews, color:d.color};
+			}
+		});
+	}
 }
 
 function evaluateReview(review) {
