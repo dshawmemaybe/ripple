@@ -1,28 +1,9 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Webapp HTML index is located at https://github.com/dshawmemaybe/ripple/blob/master/app/views/twitter/index.html.erb
 
-Things you may want to cover:
+* Relevant javascript file for calculating twitter score located at https://github.com/dshawmemaybe/ripple/blob/master/app/assets/javascripts/reviews.js
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* SentiWordNet.java is located at https://github.com/dshawmemaybe/ripple/blob/master/SentiWordNet/src/SentiWordNet.java
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
