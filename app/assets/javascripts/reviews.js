@@ -54,7 +54,7 @@ if(num_positive_reviews!=0 && num_negative_reviews != 0) {
 	{label:"Green", color:"#109618"}
 	];
 
-	var svg = d3.select("#twitter_rating").append("svg").attr("width", 250).attr("height", 250);
+	var svg = d3.select("#sentiwordnet_rating").append("svg").attr("width", 250).attr("height", 250);
 
 	svg.append("g").attr("id","salespie");
 		
@@ -250,7 +250,34 @@ function searchMovie() {
 		// Evaluate the rating from tweets
 
 		loadJSON(evaluateReviews, "classification_output/" + folder + "/tweets/" + movieName.replace(/ /g,"_") + ".json");
+		var sentiScore = getSentiScore(movieName);
+		document.getElementById("sentiwordnet_rating").innerHTML = "Sentiwordnet Score: " + sentiScore;
 	}
+}
+
+function getSentiScore(movieName){
+	var rawFile = new XMLHttpRequest();
+	var score = 0;
+    rawFile.open("GET","sentiwordnet.txt", false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                var lines = allText.split('\n');
+                for (var line=0; line<lines.length;line++){
+                	if (lines[line].split(',')[0] == movieName){
+                		score = lines[line].split(',')[1];
+                	}
+                }
+                
+            }
+        }
+    }
+    rawFile.send(null);
+    return score;
 }
 
 function toTitleCase(str)
